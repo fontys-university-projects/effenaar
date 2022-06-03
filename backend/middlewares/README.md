@@ -1,0 +1,3 @@
+Rhe middleware folder is responsible for things like "Is the user authenticated?", "Does the user have permissions to see this?". what separates it from utilities is that utilities is used inside the brain of the operation (services) and middleware uis used inside the routes. THey almost have the same functionality (prevent copy pasting the same code over and over again)
+
+Subsequently, the middlewares folder will segregate any middleware needed for the application in one place. There can be middleware for authentication, logging, or any other purpose.
