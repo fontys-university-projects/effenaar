@@ -12,22 +12,64 @@ datasource db {
 
 
 model User {
-  id            Int      @id @default(autoincrement())
-  uid           String   @unique
+  id            Int       @id @default(autoincrement())
+  uid           String    @unique //Publicliy displayed id (randomly generated number hard to predict) used for stuff that the normal client will see
   firstName     String
   lastName      String
-  email         String   @unique
-  emailVerified Boolean  @default(false)
+  email         String    @unique
+  emailVerified Boolean   @default(false)
   password      String
   dob           DateTime
-  role          UserRole @default(CLEINT)
-  createdAt     DateTime @default(now())
+  role          UserRole  @default(USER)
+  createdAt     DateTime  @default(now())
+
+  profile       Profile[]
+  event         Event[]
 
 }
 
+model Profile {
+  id       Int      @id @default(autoincrement())
+  avatar   String   //Will be auto generated
+  bio      String?  //Optional not required
+  color    String   //User name color and few others
+
+  user     User     @relation(fields: [userId], references: [id])
+  userId   Int
+}
+
+
+model Event {
+  id        Int     @id @default(autoincrement())
+  name      String  //Event Name
+  color     String  //Background color for the partciles effect
+  openChat  Boolean @default(false)
+
+  user      User    @relation(fields: [ownerId], references: [id])
+  ownerId   Int
+
+  event     eventModerators[]
+}
+
+model eventModerators {
+  id        Int        @id @default(autoincrement())
+  user      Int        //This is user Id (table id) not the uid
+  role      EventRole  @default(MOD)
+  event     Event      @relation(fields: [eventId], references: [id])
+  eventId   Int
+  
+}
+
+
+
+enum EventRole {
+  MOD       // "MOD" is responsible for managing the chat
+  COOWNER   // "COOWNER" can do the same as "MOD" but he can aslo manage the Event name, color etc 
+}
+
+
 enum UserRole {
-  CLEINT
-  PARTNER
-  CHECKUP
-  IT
+  USER      // "USER" is the default user creating a profile and participating in the concerts
+  PARTNER   // "PARTNER" is the event creator who is going to register his event
+  IT        // "IT" optional (self explanatory)
 }
