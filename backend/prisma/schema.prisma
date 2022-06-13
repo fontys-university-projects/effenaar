@@ -41,20 +41,33 @@ model Profile {
 
 model Event {
   id        Int     @id @default(autoincrement())
+  eid       String    @unique //Publicliy displayed id (randomly generated number hard to predict) used for stuff that the normal client will see
   name      String  //Event Name
   color     String  //Background color for the partciles effect
-  openChat  Boolean @default(false)
+  openChat  Boolean @default(false) //Used to enable the chat for beig joinable
 
   user      User    @relation(fields: [ownerId], references: [id])
   ownerId   Int
 
   event     eventModerators[]
+  attendees  eventAttendees[]
 }
 
 model eventModerators {
   id        Int        @id @default(autoincrement())
-  user      Int        //This is user Id (table id) not the uid
+  user      Int        @unique //This is user Id (table id) not the uid
   role      EventRole  @default(MOD)
+  event     Event      @relation(fields: [eventId], references: [id])
+  eventId   Int
+  
+}
+
+model eventAttendees {
+  id        Int        @id @default(autoincrement())
+  user      Int        @unique//This is user Id (table id) not the uid
+  acceptedInvite  Boolean @default(false)
+
+
   event     Event      @relation(fields: [eventId], references: [id])
   eventId   Int
   

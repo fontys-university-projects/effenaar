@@ -1,11 +1,13 @@
 const express = require('express')
 const router = express.Router()
 const auth = require('./auth')
-const concert = require('./concert')
-const dashboard = require('./dashboard')
+const profile = require('./profile')
+const event = require('./event')
 const createError = require('http-errors')
 
 router.use('/auth', auth)
+router.use('/profile', profile)
+router.use('/event', event)
 
 router.use( async (req, res, next) => {
     next(createError.NotFound('Route not Found'))

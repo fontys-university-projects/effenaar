@@ -20,7 +20,11 @@ const route = require('./routes')
 app.use('/api', route)
 
 app.disable('x-powered-by')
-
+const databaseUrl = process.env.DATABASE_URL
+if (!databaseUrl) {
+  console.log('You are missing "DATABASE_URL" inside the .env file \n')
+  console.log('Example: DATABASE_URL="postgresql://username:password@ip:5432/databaseName?schema=public"')
+}
 const port = process.env.PORT || 5000
 app.listen(port, () => {
     console.log(`server is running on port ${port}`)

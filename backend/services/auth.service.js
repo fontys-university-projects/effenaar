@@ -37,6 +37,7 @@ class authService {
         }
         validator.verifyEmail(email)
         validator.verifyPassword(data.password)
+        validator.verifyDate(data.dob)
 
         data.password = bcrypt.hashSync(data.password, saltValue)
         data.uid = crypto.randomBytes(9).toString('hex')
@@ -82,7 +83,7 @@ class authService {
     }
 
     static async loginStatus(data) {
-        const {uid} = data;
+        const { uid } = data;
 
         const user = await prisma.user.findUnique({
             where: {
@@ -94,10 +95,10 @@ class authService {
             throw createError.Unauthorized('User is not logged in!')
         }
 
-        return("Authenticated")
+        return ("Authenticated")
     }
     static async role(data) {
-        const {uid} = data;
+        const { uid } = data;
         const user = await prisma.user.findUnique({
             where: {
                 uid
@@ -111,8 +112,41 @@ class authService {
             throw createError.Unauthorized('User is not logged in!')
         }
 
-        return(user)
+        return (user)
     }
+
+    static async settings(data) {
+        const { uid, firstName, lastName, dob, avatar, bio, color } = data
+        
+        const user = await prisma.user.findUnique({
+            where: {
+                uid
+            }
+        })
+
+        if(dob !== null) {
+            validator.verifyDate(dob)
+        }
+        const details = [firstName, lastName, dob, avatar, bio, color ]
+
+        details.forEach(updateDetails)
+
+        function updateDetails(item) {
+            if(item !== null) {
+                await prisma.user.update({
+                    where: {
+                      id: user.id
+                    },
+                    data: {
+                      item
+                    },
+                  })
+            }
+        }
+
+        return
+    }
+
 }
 
 module.exports = authService

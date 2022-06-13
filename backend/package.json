@@ -21,7 +21,6 @@
     "http-errors": "^2.0.0",
     "jsonwebtoken": "^8.5.1",
     "multer": "^1.4.4",
-    "speakeasy": "^2.0.0",
     "validator": "^13.7.0"
   }
 }
