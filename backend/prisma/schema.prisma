@@ -10,7 +10,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 model User {
   id            Int       @id @default(autoincrement())
   uid           String    @unique //Publicliy displayed id (randomly generated number hard to predict) used for stuff that the normal client will see
@@ -22,67 +21,71 @@ model User {
   dob           DateTime
   role          UserRole  @default(USER)
   createdAt     DateTime  @default(now())
-
+  sender        Messages? @relation("sender")
+  reciever      Messages? @relation("reciever")
   profile       Profile[]
   event         Event[]
 
 }
 
 model Profile {
-  id       Int      @id @default(autoincrement())
-  avatar   String   //Will be auto generated
-  bio      String?  //Optional not required
-  color    String   //User name color and few others
-
-  user     User     @relation(fields: [userId], references: [id])
-  userId   Int
+  id     Int     @id @default(autoincrement())
+  avatar String //Will be auto generated
+  bio    String? //Optional not required
+  color  String //User name color and few others
+  user   User    @relation(fields: [userId], references: [id])
+  userId Int
 }
 
-
 model Event {
-  id        Int     @id @default(autoincrement())
-  eid       String    @unique //Publicliy displayed id (randomly generated number hard to predict) used for stuff that the normal client will see
-  name      String  //Event Name
-  color     String  //Background color for the partciles effect
-  openChat  Boolean @default(false) //Used to enable the chat for beig joinable
-
-  user      User    @relation(fields: [ownerId], references: [id])
+  id        Int               @id @default(autoincrement())
+  eid       String            @unique //Publicliy displayed id (randomly generated number hard to predict) used for stuff that the normal client will see
+  name      String //Event Name
+  color     String //Background color for the partciles effect
+  openChat  Boolean           @default(false) //Used to enable the chat for beig joinable
+  user      User              @relation(fields: [ownerId], references: [id])
   ownerId   Int
-
   event     eventModerators[]
-  attendees  eventAttendees[]
+  attendees eventAttendees[]
+  messages  Messages[]
 }
 
 model eventModerators {
-  id        Int        @id @default(autoincrement())
-  user      Int        @unique //This is user Id (table id) not the uid
-  role      EventRole  @default(MOD)
-  event     Event      @relation(fields: [eventId], references: [id])
-  eventId   Int
-  
+  id      Int       @id @default(autoincrement())
+  user    Int       @unique //This is user Id (table id) not the uid
+  role    EventRole @default(MOD)
+  event   Event     @relation(fields: [eventId], references: [id])
+  eventId Int
+
 }
 
 model eventAttendees {
-  id        Int        @id @default(autoincrement())
-  user      Int        @unique//This is user Id (table id) not the uid
-  acceptedInvite  Boolean @default(false)
+  id             Int     @id @default(autoincrement())
+  user           Int     @unique //This is user Id (table id) not the uid
+  acceptedInvite Boolean @default(false)
+  event          Event   @relation(fields: [eventId], references: [id])
+  eventId        Int
 
-
-  event     Event      @relation(fields: [eventId], references: [id])
-  eventId   Int
-  
 }
 
-
+model Messages {
+  id         Int    @id @default(autoincrement())
+  text       String
+  event      Event  @relation(fields: [eventId], references: [id])
+  eventId    Int
+  sender     User   @relation("sender", fields: [senderId], references: [id])
+  senderId   Int    @unique
+  reciever   User   @relation("reciever", fields: [recieverId], references: [id])
+  recieverId Int    @unique
+}
 
 enum EventRole {
-  MOD       // "MOD" is responsible for managing the chat
-  COOWNER   // "COOWNER" can do the same as "MOD" but he can aslo manage the Event name, color etc 
+  MOD // "MOD" is responsible for managing the chat
+  COOWNER // "COOWNER" can do the same as "MOD" but he can aslo manage the Event name, color etc 
 }
 
-
 enum UserRole {
-  USER      // "USER" is the default user creating a profile and participating in the concerts
-  PARTNER   // "PARTNER" is the event creator who is going to register his event
-  IT        // "IT" optional (self explanatory)
+  USER // "USER" is the default user creating a profile and participating in the concerts
+  PARTNER // "PARTNER" is the event creator who is going to register his event
+  IT // "IT" optional (self explanatory)
 }
