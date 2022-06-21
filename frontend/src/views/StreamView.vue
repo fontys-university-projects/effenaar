@@ -14,23 +14,23 @@
       </div>
       <div>
         <div class="h-96 bg-red-300">
-            <iframe class="aspect-video justify-center gap-x-2 drop-shadow-md h-full w-full" src="https://www.youtube.com/embed/nfUsovHcw4s?autoplay=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <iframe class="aspect-video justify-center gap-x-2 drop-shadow-md h-full w-full" src="https://www.youtube.com/embed/7W27R6uh8Rc?autoplay=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
           </div>
       </div>
       <div class="flex justify-center mt-2 gap-x-2">
         <div>
           <button class="bg-emerald-300 hover:bg-emerald-400 text-white font-bold py-2 px-4 rounded-full drop-shadow-md">
-            <img class="aspect-square h-5 w-5 scale-100 hover:scale-125 ease-in duration-300" src="../assets/clapping-hands_1f44f.png" alt="Clapping gands emoji"/>
+            <img class="aspect-square h-7 w-7 scale-100 hover:scale-125 ease-in duration-300" src="../assets/clapping-hands_1f44f.png" alt="Clapping gands emoji"/>
           </button>
         </div>
         <div>
           <button class="bg-emerald-300 hover:bg-emerald-400 text-white font-bold py-2 px-4 rounded-full drop-shadow-md">
-            <img class="aspect-square h-5 w-5 scale-100 hover:scale-125 ease-in duration-300" src="../assets/party-popper_1f389.png" alt="Party popper_1f389 emoji"/>
+            <img class="aspect-square h-7 w-7 scale-100 hover:scale-125 ease-in duration-300" src="../assets/party-popper_1f389.png" alt="Party popper_1f389 emoji"/>
           </button>
         </div>
         <div>
           <button class="bg-emerald-300 hover:bg-emerald-400 text-white font-bold py-2 px-4 rounded-full drop-shadow-md">
-            <img class="aspect-square h-5 w-5 scale-100 hover:scale-125 ease-in duration-300" src="../assets/red-heart_2764-fe0f.png" alt="Red heart emoji"/>
+            <img class="aspect-square h-7 w-7 scale-100 hover:scale-125 ease-in duration-300" src="../assets/red-heart_2764-fe0f.png" alt="Red heart emoji"/>
         </button>
         </div>
       </div>
